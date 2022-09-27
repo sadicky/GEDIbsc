@@ -2,7 +2,6 @@
 require_once('../../../Models/category.class.php');
 $cats = new Category();
 
-if(empty($_POST['id'])){
 	$id = htmlspecialchars(trim($_POST['id']));
 	$cat = htmlspecialchars(trim($_POST['cat']));
     
@@ -13,6 +12,4 @@ if(empty($_POST['id'])){
         else{
             echo "Erreur";
         }
-  
-  }
  ?>

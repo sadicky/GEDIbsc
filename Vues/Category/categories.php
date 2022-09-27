@@ -1,4 +1,4 @@
-<?php $title = "Group";
+<?php $title = "Categories";
 include 'Public/Includes/head.php'; ?>
 
 <body>
@@ -43,9 +43,9 @@ include 'Public/Includes/head.php'; ?>
                     <div class="row">
                         <div class="col-12">
                                 <p class="pull-righ">  
-                                     <button type="button" data-toggle="modal" data-target="#Categories"  class="btn btn-sm btn-primary pull-right"><i class="fas fa-plus"></i> <b>New Category</b></button>
-                                     <button type="button" data-toggle="modal" data-target="#Categories"  class="btn btn-sm btn-primary pull-right"><i class="fe-check-circle"></i> Categorie Activé</button>
-                                     <button type="button" data-toggle="modal" data-target="#Categories"  class="btn btn-sm btn-primary pull-right"><i class="fe-x-circle"></i> Categorie Desactivé</button>
+                                     <button type="button" data-toggle="modal" data-target="#Categories"   class="btn btn-sm btn-primary pull-right"><i class="fas fa-plus"></i> <b>New Category</b></button>
+                                     <a href="<?=WEBROOT?>catact" class="btn btn-sm btn-primary pull-right"><i class="fe-check-circle"></i> Categorie Activé</a>
+                                     <a href="<?=WEBROOT?>catdes" class="btn btn-sm btn-primary pull-right"><i class="fe-x-circle"></i> Categorie Desactivé</a>
 				                </p>
                             <div class="card-box table-responsive">
                                 <h4 class="header-title"><b>All Group</b></h4>
@@ -64,9 +64,9 @@ include 'Public/Includes/head.php'; ?>
 
                                     <tbody>
                                         <!-- Affichage de toutes les catégories -->
-                                        <?php foreach ($getC as $category):?>
+                                        <?php $i=1; foreach ($getC as $category):?>
                                         <tr>
-                                            <td><?=$category->ID?></td>
+                                            <td><?=$i?></td>
                                             <td><?=$category->CATEGORIE?></td>
                                             <td>SADICKY Dave</td>
                                             <td>
@@ -85,7 +85,7 @@ include 'Public/Includes/head.php'; ?>
                                              </td>
                                             <td> <button type='button' name='update' id='<?= $category->ID?>' class='btn btn-block btn-xs btn-primary view_data' title='Modifier'><i class='fas fa-edit'></i></button></td>
                                         </tr>
-                                        <?php endforeach?>
+                                        <?php $i++; endforeach?>
                                     </tbody>
                                 </table>
                             </div>

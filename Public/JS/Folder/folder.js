@@ -35,7 +35,7 @@ $(document).ready(function () {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                setInterval(refreshPage, 1000);
+                window.location.href='index.php?p=forderall';
                 fill_treeview();
             }
         });

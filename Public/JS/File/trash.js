@@ -45,7 +45,7 @@ $(document).ready(function () {
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
-                //    setInterval(refreshPage, 1000);
+                   setInterval(refreshPage, 1000);
                    }
             });
         };

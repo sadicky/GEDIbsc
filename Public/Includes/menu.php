@@ -52,13 +52,6 @@
             </li>
             
             <li>
-                <a href="<?=WEBROOT?>tags">
-                    <i class="fe-paperclip"></i>
-                    <span> Documents Tagging </span>
-                </a>
-            </li>
-
-            <li>
                 <a href="<?=WEBROOT?>categories">
                     <i class="fe-briefcase"></i>
                     <span> Documents Categories </span>

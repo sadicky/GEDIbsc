@@ -51,9 +51,9 @@ include 'Public/Includes/head.php'; ?>
 
                                 <p class="text-right">
                                     <button class="btn btn-primary"><i class="fe-eye"></i> View</button>
-                                    <button class="btn btn-primary"><i class="fe-paperclip"></i> Tagging</button>
+                                    <a href="<?=WEBROOT?>tags" class="btn btn-primary"><i class="fe-paperclip"></i> Tagging</a>
                                     <button class="btn btn-primary"><i class="fe-navigation"></i> Share with users</button>
-                                    <button class="btn btn-danger p-l"><i class="fe-trash-2"></i> Delete</button>
+                                    <button id="<?=$file->ID?>" class="btn btn-danger p-l delete"><i class="fe-trash-2"></i> Delete</button>
                                 </p>
 
 
@@ -100,7 +100,10 @@ include 'Public/Includes/head.php'; ?>
                                                         <div class="card-body">
                                                             <div class="card-text">                                                                
                                                                 <label>Size</label> <br>
-                                                                    <?=$file->SIZEF?><br><br>
+                                                                    <?php
+                                                                        echo $getFile->formatSizeUnits($file->SIZEF);
+                                                                    ?>
+                                                                    <br><br>
                                                                 <label for="">Keyword</label><br>
                                                                     <?=$file->KEYWORDS?><br><br>
                                                                 <label for="">Category</label> <br>
@@ -122,7 +125,7 @@ include 'Public/Includes/head.php'; ?>
                                                                     }?>
                                                                     <br><br>
                                                                 <label for="">Original Author</label> <br>
-                                                                    <?=$file->DESCRIPTIONF?><br>
+                                                                    <?="SADICKY"?><br>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -192,6 +195,6 @@ include 'Public/Includes/head.php'; ?>
 </body>
 
 <!--Pour les javascript-->
-<!-- <script type="text/javascript" src="Public/JS/File/file.js"></script> -->
+<script type="text/javascript" src="Public/JS/File/file.js"></script>
 
 </html>

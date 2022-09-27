@@ -44,6 +44,14 @@ if(isset($_GET['p'])){
 	{
 		Category();
 	}
+	else if($_GET['p']=='catact')
+	{
+		CategoryA();
+	}
+	else if($_GET['p']=='catdes')
+	{
+		CategoryD();
+	}
 	//url pour le file
 	else if($_GET['p']=='files')
 	{

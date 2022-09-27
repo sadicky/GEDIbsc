@@ -1,4 +1,4 @@
-<?php $title = "Documents";
+<?php $title = "Categories Actives";
 include 'Public/Includes/head.php'; ?>
 
 <body>
@@ -42,59 +42,43 @@ include 'Public/Includes/head.php'; ?>
 
                     <div class="row">
                         <div class="col-12">
-                                <p class="pull-righ">  
-                                     <button type="button" data-toggle="modal" data-target="#Files"  class="btn btn-sm btn-primary pull-right"><i class="fas fa-plus"></i> <b>New Documents</b></button>
+                                <p class="text-right">
+                                     <a href="<?=WEBROOT?>categories" class="btn btn-sm btn-primary pull-right"><i class="fe-arrow-left"></i>Toutes les Categories</a>
 				                </p>
                             <div class="card-box table-responsive">
-        <div class="message"></div><div class="error"></div>
-                                <h4 class="header-title"><b>All Document</b></h4>
+                                <h4 class="header-title"><b><?=$title?></b></h4>
                                 <table id="datatable-buttons" class="table table-striped table-condensed table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Documents</th>
-                                            <th>Folder</th>
-                                            <th>Categoty</th>
-                                            <th>Author</th>
-                                            <th>View</th>
-                                            <th>Actions</th>
+                                            <th>Title</th>
+                                            <th>Added By</th>
+                                            <th>Statut</th>
+                                            <th>Act/Des</th>
                                         </tr>
                                     </thead>
 
 
                                     <tbody>
                                         <!-- Affichage de toutes les catégories -->
-                                        <?php foreach ($files as $file):?>
-                                            <?php
-                                            
-                                                if($file->IDC==0){
-                                                    $category = "Non classé";
-                                                }else{
-                                                    $category = $getCategory->getCatId($file->IDC)[0][1];
-                                                }
-
-                                                if($file->IDD==0){
-                                                    $folder = "Non classé";
-                                                }else{
-                                                    $folder = $getFolder->getFolderId($file->IDD)[0][1];
-                                                }
-                                                
-                                                // $tagListOfTheFile = $tag->getTagByFile($value->id);
-                                            ?>
+                                        <?php foreach ($getC as $category):?>
                                         <tr>
-                                            <td><?=$file->ID?></td>
-                                            <td><i class='fas fa-file'></i> <a href="index.php?p=file&id=<?= $file->ID ?>"><?=$file->NAMEF?></a></td>
-                                            <td><?=$folder?></td>
-                                            <td><?=$category?></td>
+                                            <td><?=$category->CATEGORIE?></td>
                                             <td>SADICKY Dave</td>
                                             <td>
-                                            <a href="<?= $file->URLF ?>" target='blank' class='btn btn-block btn-xs btn-primary' ><i class='fe-eye' ></i> </a>
-                                              </td>
-                                            <td class="text-center">  
-                                                <button type='button' name='update' id='<?= $file->ID?>' class='btn btn-xs btn-primary view_data' title='Modifier'><i class='fas fa-edit'></i></button>
-                                                 <button type='button' name='delete' id='<?= $file->ID?>' class='btn btn-xs btn-danger delete' title='Supprimer'><i class='fe-trash'></i></button>
+                                                <?php if($category->STATUT==1):?>
+                                                <b class="badge badge-primary badge-pill">Activate</b>
+                                                <?php else:?>
+                                                <b class="badge badge-danger badge-pill">Deactivate</b>
+                                                <?php endif?>
                                             </td>
-                                        </tr>
+                                            <td>
+                                                <?php if($category->STATUT==0):?>
+                                                    <button type='button'  id='<?=$category->ID?>' name='activer' class='btn btn-block btn-xs btn-primary activer' ><i class='fe-check-circle' ></i> Actived?</button>
+                                                <?php else:?>
+                                                    <button type='button'  id='<?= $category->ID?>' name='desactiver' class='btn btn-block btn-xs btn-danger desactiver' ><i class='fe-x-circle' ></i> Deactived?</button>
+                                                <?php endif?>
+                                             </td>
+                                         </tr>
                                         <?php endforeach?>
                                     </tbody>
                                 </table>
@@ -116,8 +100,8 @@ include 'Public/Includes/head.php'; ?>
         </div>
         <!-- END wrapper -->
 
-        <?php include_once 'Public/Modals/File/addfile.php';
-            //   include_once 'Public/Modals/Category/editcat.php'; ?>
+        <?php include_once 'Public/Modals/Category/addcat.php';
+              include_once 'Public/Modals/Category/editcat.php'; ?>
         
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
@@ -126,5 +110,5 @@ include 'Public/Includes/head.php'; ?>
 </body>
 
 <!--Pour les javascript-->
-<script type="text/javascript" src="Public/JS/File/file.js"></script>
+<script type="text/javascript" src="Public/JS/Category/category.js"></script>
 </html>

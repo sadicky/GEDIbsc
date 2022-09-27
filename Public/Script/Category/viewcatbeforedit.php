@@ -3,7 +3,7 @@ require_once('../../../Models/category.class.php');
 $cats = new Category();
 
 $id = $_POST['id'];
-$cat = $cats->getCatId($id);
+$cat = $cats->getCatId2($id);
 ?>
 <div>
     <form method="post" id='formeditcat' enctype="multipart/form-data">

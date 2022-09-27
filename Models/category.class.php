@@ -44,6 +44,18 @@ Class Category
          return $tbP;
     }
     
+    //afficher les catégories desactivés
+    public function getCategoriesD()
+    {
+        $db = getConnection();
+        $statement = $db->prepare("SELECT * FROM tbl_categories WHERE STATUT='0' order by CATEGORIE");
+        $statement->execute();
+        $tbP = array();
+        while($data =  $statement->fetchObject()){
+            $tbP[] = $data;
+        }
+         return $tbP;
+    }
     //Modifier une categorie
     public function updateCategory($cat,$id)
     {
@@ -62,6 +74,14 @@ Class Category
         $matP = $db->prepare("SELECT * FROM tbl_categories WHERE ID=? LIMIT 1");
         $matP->execute(array($idcat));
         $res =  $matP->fetchAll();
+        return $res;
+    }
+    public function getCatId2($idcat)
+    {
+        $db = getConnection();
+        $matP = $db->prepare("SELECT * FROM tbl_categories WHERE ID=? LIMIT 1");
+        $matP->execute(array($idcat));
+        $res =  $matP->fetchObject();
         return $res;
     }
 	

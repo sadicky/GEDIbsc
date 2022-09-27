@@ -52,7 +52,7 @@ $(document).ready(function () {
     $(document).on("click", ".delete", function (event) {
         event.preventDefault();
         var id = $(this).attr("id");
-      if (confirm("Voulez-vous supprimer cefichier ? ")) {        
+      if (confirm("Voulez-vous supprimer ce fichier ? ")) {        
             $.ajax({
                 url: "Public/Script/File/delfile.php",
                 method: "POST",
@@ -64,8 +64,8 @@ $(document).ready(function () {
                                     title: 'Success',
                                     showConfirmButton: false,
                                     timer: 1500
-                                });
-                   setInterval(refreshPage, 1000);
+                                });              
+               window.location.href='index.php?p=files';
                    }
             });
         };
