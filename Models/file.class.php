@@ -216,8 +216,8 @@ Class File
         unlink($o->PATHF);
         $rb = $db->prepare("DELETE FROM tbl_trash WHERE ID=?");
         $rb->execute([$trashId]);
-        // $ra = $db->prepare("DELETE FROM tbl_files_as_tags WHERE file_id=?");
-        // $ra->execute([$o->id]);
+        $ra = $db->prepare("DELETE FROM tbl_files_tags WHERE IDF=?");
+        $ra->execute([$o->ID]);
     }
 
     public function formatSizeUnits($bytes)

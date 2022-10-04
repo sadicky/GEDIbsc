@@ -2,7 +2,7 @@
 
 require_once('../../../Models/file.class.php');
 $fileUpl = new File();
-// var_dump($_SERVER);die();
+
 if (isset($_POST['action'])) {
   if ($_POST['action'] == 'fileUpload') {
     $m="";

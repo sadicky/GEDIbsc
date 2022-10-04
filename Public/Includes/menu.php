@@ -66,7 +66,7 @@
             <li>
                 <a href="<?=WEBROOT?>trash">
                     <i class="fe-trash"></i>
-                    <span> Trash </span>
+                    <span> Trash </span><span class="badge badge-danger badge-pill float-right"><?=count($list)?></span>
                 </a>
             </li>
             <li>

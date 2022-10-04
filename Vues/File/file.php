@@ -1,5 +1,5 @@
 <?php $title = $file->NAMEVIEW;
-include 'Public/Includes/head.php'; ?>
+include 'Public/Includes/head.php';?>
 
 <body>
 
@@ -30,7 +30,7 @@ include 'Public/Includes/head.php'; ?>
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">GedIBSC</a></li>
+                                        <li class="breadcrumb-item"><a href="/dashboard">GedIBSC</a></li>
                                         <li class="breadcrumb-item active"><?= $title ?></li>
                                     </ol>
                                 </div>
@@ -46,19 +46,39 @@ include 'Public/Includes/head.php'; ?>
                                 <a href="files" class="btn btn-primary"><i class="fe-arrow-left"></i> All Documents</a>
                             </p>
                             <div class="card-box table-responsive">
-                                <div class="message"></div>
-                                <div class="error"></div>
+                                    <ul>
+                                        <?php foreach ($tagsList as $vtags): ?>
+                                            <li>
+                                                <form class="form-inline" id="formtagdel" method="post">  
+                                                        <?= $getT->getTag($vtags['IDT'])[0]->TAG ?>
+                                                        <input type="hidden" name="idf" id="idf" value="<?=$id?>" />
+                                                        <input type="submit" id="<?=$vtags['IDT']?>" style="color:red;" class="btn btn-link deletetag" value="X" />
+                                                </form>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <form class="form-inline" method="post" id="formtag">
+                                        <input type="hidden" name="id" value="<?=$id; ?>" />
+                                        <input type="text" class="form-control" name="tag" placeholder="Nom du tag" list="tags" />
+                                        <datalist id="tags">
+                                            <?php foreach ($tags as $ve) : ?>
+                                                <option value="<?=$ve['TAG']; ?>">
+                                                <?php endforeach; ?>
+                                        </datalist>
+                                        <input type="submit" class="btn btn-success validatetag" value="+" />
+
+                                    </form>
 
                                 <p class="text-right">
                                     <button class="btn btn-primary"><i class="fe-eye"></i> View</button>
-                                    <a href="<?=WEBROOT?>tags" class="btn btn-primary"><i class="fe-paperclip"></i> Tagging</a>
+                                    <!-- <a href="index.php?p=tags&id=<?= $file->ID ?>" class="btn btn-primary"><i class="fe-paperclip"></i> Tagging</a> -->
                                     <button class="btn btn-primary"><i class="fe-navigation"></i> Share with users</button>
-                                    <button id="<?=$file->ID?>" class="btn btn-danger p-l delete"><i class="fe-trash-2"></i> Delete</button>
+                                    <button id="<?= $file->ID ?>" class="btn btn-danger p-l delete"><i class="fe-trash-2"></i> Delete</button>
                                 </p>
 
 
                                 <div class="card-box">
-                                    <h4 class="header-title mb-4">Details of: </h4>
+                                    <h4 class="header-title mb-4">Details of:<?= $file->NAMEVIEW ?> </h4>
 
                                     <ul class="nav nav-tabs nav-bordered nav-justified">
                                         <li class="nav-item">
@@ -81,15 +101,15 @@ include 'Public/Includes/head.php'; ?>
                                                         <div class="card-body">
                                                             <p class="card-text">
                                                                 <label for="">Document Name</label><br>
-                                                                    <?=$file->NAMEF?><br><br>
+                                                                <?= $file->NAMEF ?><br><br>
                                                                 <label for="">Version</label> <br>
-                                                                    <?=$file->VERSION?><br><br>
+                                                                <?= $file->VERSION ?><br><br>
                                                                 <label for="">Created On</label> <br>
-                                                                    <?=$file->CREATEDAT?><br><br>
+                                                                <?= $file->CREATEDAT ?><br><br>
                                                                 <label for="">Created by</label><br>
-                                                                    <?=$file->IDU?><br><br>
+                                                                <?= $file->IDU ?><br><br>
                                                                 <label for="">Description</label> <br>
-                                                                    <?=$file->DESCRIPTIONF?><br><br>
+                                                                <?= $file->DESCRIPTIONF ?><br><br>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -98,34 +118,34 @@ include 'Public/Includes/head.php'; ?>
                                                     <div class="card">
                                                         <h5 class="card-header" style="background-color:dodgerblue ;color:white">Meta Data</h5>
                                                         <div class="card-body">
-                                                            <div class="card-text">                                                                
+                                                            <div class="card-text">
                                                                 <label>Size</label> <br>
-                                                                    <?php
-                                                                        echo $getFile->formatSizeUnits($file->SIZEF);
-                                                                    ?>
-                                                                    <br><br>
+                                                                <?php
+                                                                echo $getFile->formatSizeUnits($file->SIZEF);
+                                                                ?>
+                                                                <br><br>
                                                                 <label for="">Keyword</label><br>
-                                                                    <?=$file->KEYWORDS?><br><br>
+                                                                <?= $file->KEYWORDS ?><br><br>
                                                                 <label for="">Category</label> <br>
-                                                                <?php if($file->IDC==0){
-                                                                        $category = "Non classé";
-                                                                        echo $category;
-                                                                    }else{
-                                                                        $category = $getCategory->getCatId($file->IDC)[0][1];
-                                                                        echo $category;
-                                                                    }?>
-                                                                    <br><br>
+                                                                <?php if ($file->IDC == 0) {
+                                                                    $category = "Non classé";
+                                                                    echo $category;
+                                                                } else {
+                                                                    $category = $getCategory->getCatId($file->IDC)[0][1];
+                                                                    echo $category;
+                                                                } ?>
+                                                                <br><br>
                                                                 <label for="">Folder</label><br>
-                                                                <?php if($file->IDD==0){
-                                                                        $category = "Non classé";
-                                                                        echo $category;
-                                                                    }else{
-                                                                        $category = $getFolder->getFolderId($file->IDD)[0][1];
-                                                                        echo $category;
-                                                                    }?>
-                                                                    <br><br>
+                                                                <?php if ($file->IDD == 0) {
+                                                                    $category = "Non classé";
+                                                                    echo $category;
+                                                                } else {
+                                                                    $category = $getFolder->getFolderId($file->IDD)[0][1];
+                                                                    echo $category;
+                                                                } ?>
+                                                                <br><br>
                                                                 <label for="">Original Author</label> <br>
-                                                                    <?="SADICKY"?><br>
+                                                                <?= "SADICKY" ?><br>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -196,5 +216,6 @@ include 'Public/Includes/head.php'; ?>
 
 <!--Pour les javascript-->
 <script type="text/javascript" src="Public/JS/File/file.js"></script>
+<script type="text/javascript" src="Public/JS/Tag/tag.js"></script>
 
 </html>

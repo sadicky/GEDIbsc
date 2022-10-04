@@ -27,6 +27,9 @@
         <!-- Treeview Plugin JavaScript -->
         <script src="Assets/libs/bootstrap-treeview-master/dist/bootstrap-treeview.min.css"></script>
 
+        
+        <link href="Assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+
         <!-- Select2 Plugin JavaScript -->        
         <link href="Assets/libs/select2/select2.min.css" rel="stylesheet" type="text/css" />
         <link href="Assets/libs/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" />

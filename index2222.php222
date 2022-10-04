@@ -9,17 +9,17 @@ include 'Controlleurs/file.php';
 include 'Controlleurs/folder.php';
 include 'Controlleurs/tag.php';
 if(isset($_GET['p'])){
-	// $params = explode('/', $_GET['p']); 
-	// //die(print_r($params));
-	// $_SESSION['action'] = '';
-	// $action = $params[0];
-	// $d = preg_split("#[-]+#", $action);
-	// // var_dump($d);die();
-	// $n = count($d);   
-	// if ($n > 1) 
-	// {
-	// 	$action = $d[0];
-	// }
+	$params = explode('/', $_GET['p']); 
+	//die(print_r($params));
+	$_SESSION['action'] = '';
+	$action = $params[0];
+	$d = preg_split("#[-]+#", $action);
+	// var_dump($d);die();
+	$n = count($d);   
+	if ($n > 1) 
+	{
+		$action = $d[0];
+	}
 	//url pour le logi
 	if($_GET['p']=='login'){
 		login();

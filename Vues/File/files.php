@@ -55,6 +55,7 @@ include 'Public/Includes/head.php'; ?>
                                             <th>Documents</th>
                                             <th>Folder</th>
                                             <th>Categoty</th>
+                                            <th>Tags</th>
                                             <th>Author</th>
                                             <th>View</th>
                                             <th>Actions</th>
@@ -77,15 +78,20 @@ include 'Public/Includes/head.php'; ?>
                                                     $folder = "Non classé";
                                                 }else{
                                                     $folder = $getFolder->getFolderId($file->IDD)[0][1];
-                                                }
-                                                
-                                                // $tagListOfTheFile = $tag->getTagByFile($value->id);
+                                                }                                                
+                                                $tagListOfTheFile = $getT->getTagByFile($file->ID);
+                                                // var_dump($tagListOfTheFile);die();
                                             ?>
                                         <tr>
                                             <td><?=$file->ID?></td>
                                             <td><i class='fas fa-file'></i> <a href="index.php?p=file&id=<?= $file->ID ?>"><?=$file->NAMEF?></a></td>
                                             <td><?=$folder?></td>
                                             <td><?=$category?></td>
+                                            <td>
+                                                 <?php foreach ($tagListOfTheFile as $v): ?>
+                                                    <a href="#" class="btn btn-success btn-xs"><?=$getT->getTag($v['IDT'])[0]->TAG;?></a>,                                             
+                                                 <?php endforeach; ?>
+                                            </td>
                                             <td>SADICKY Dave</td>
                                             <td>
                                             <a href="<?= $file->URLF ?>" target='blank' class='btn btn-block btn-xs btn-primary' ><i class='fe-eye' ></i> </a>

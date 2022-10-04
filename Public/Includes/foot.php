@@ -49,6 +49,9 @@
     <script src="Assets/libs/bootstrap-filestyle2/bootstrap-filestyle.min.js"></script>
 
     
+    <script src="Assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+
+    
         <!--Dropzone js -->
         <script src="Assets/libs/dropzone/dropzone.min.js"></script>
 
