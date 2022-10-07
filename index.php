@@ -2,25 +2,25 @@
 session_start();
 define('WEBROOT',str_replace('index.php', "", $_SERVER['SCRIPT_NAME']));
 define('ROOT',str_replace('index.php', "", $_SERVER['SCRIPT_FILENAME']));
-// define('ROOTPATH', __DIR__);
+
 include 'Controlleurs/category.php';
 include 'Controlleurs/main.php';
 include 'Controlleurs/file.php';
 include 'Controlleurs/folder.php';
 include 'Controlleurs/tag.php';
 if(isset($_GET['p'])){
-	// $params = explode('/', $_GET['p']); 
-	// //die(print_r($params));
-	// $_SESSION['action'] = '';
-	// $action = $params[0];
-	// $d = preg_split("#[-]+#", $action);
-	// // var_dump($d);die();
-	// $n = count($d);   
-	// if ($n > 1) 
-	// {
-	// 	$action = $d[0];
-	// }
-	//url pour le logi
+	$params = explode('/', $_GET['p']); 
+	//die(print_r($params));
+	$_SESSION['action'] = '';
+	$action = $params[0];
+	$d = preg_split("#[-]+#", $action);
+	// var_dump($d);die();
+	$n = count($d);   
+	if ($n > 1) 
+	{
+		$action = $d[0];
+	}
+	//url pour le login
 	if($_GET['p']=='login'){
 		login();
 	}  
@@ -65,6 +65,11 @@ if(isset($_GET['p'])){
 		FileId();
 	}
 	
+	//recupere le data dun fichier
+	else if($_GET['p']=='editFile')
+	{
+		FileEdit();
+	}
 	//recupere un fichier
 	else if($_GET['p']=='trash')
 	{
@@ -75,6 +80,12 @@ if(isset($_GET['p'])){
 	else if($_GET['p']=='tags')
 	{
 		Tags();
+	}
+
+	//recupere un fichier
+	else if($_GET['p']=='search')
+	{
+		Search();
 	}
 	//pour la page non trouvee
 	else{

@@ -97,7 +97,7 @@ include 'Public/Includes/head.php'; ?>
                                             <a href="<?= $file->URLF ?>" target='blank' class='btn btn-block btn-xs btn-primary' ><i class='fe-eye' ></i> </a>
                                               </td>
                                             <td class="text-center">  
-                                                <button type='button' name='update' id='<?= $file->ID?>' class='btn btn-xs btn-primary view_data' title='Modifier'><i class='fas fa-edit'></i></button>
+                                                <a href="index.php?p=editFile&id=<?= $file->ID ?>" class='btn btn-xs btn-primary'  title='Modifier'><i class='fas fa-edit'></i></a>
                                                  <button type='button' name='delete' id='<?= $file->ID?>' class='btn btn-xs btn-danger delete' title='Supprimer'><i class='fe-trash'></i></button>
                                             </td>
                                         </tr>
@@ -122,8 +122,7 @@ include 'Public/Includes/head.php'; ?>
         </div>
         <!-- END wrapper -->
 
-        <?php include_once 'Public/Modals/File/addfile.php';
-            //   include_once 'Public/Modals/Category/editcat.php'; ?>
+        <?php include_once 'Public/Modals/File/addfile.php'; ?>
         
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>

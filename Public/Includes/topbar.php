@@ -100,7 +100,6 @@
                 <span class="logo-lg-text-light">IBSC</span>
             </span>
             <span class="logo-sm">
-                <!-- <span class="logo-sm-text-dark">U</span> -->
                 <img src="Assets/images/logo-sm.png" alt=""  style="color: white" height="54">
             </span>
         </a>

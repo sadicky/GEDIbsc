@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li>
-                <a href="files">
+                <a href="<?=WEBROOT?>search">
                     <i class="fe-search"></i>
                     <span>Search Documents</span>
                 </a>

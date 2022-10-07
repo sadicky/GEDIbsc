@@ -1,5 +1,5 @@
 <?php $title = $file->NAMEVIEW;
-include 'Public/Includes/head.php';?>
+include 'Public/Includes/head.php'; ?>
 
 <body>
 
@@ -46,28 +46,28 @@ include 'Public/Includes/head.php';?>
                                 <a href="files" class="btn btn-primary"><i class="fe-arrow-left"></i> All Documents</a>
                             </p>
                             <div class="card-box table-responsive">
-                                    <ul>
-                                        <?php foreach ($tagsList as $vtags): ?>
-                                            <li>
-                                                <form class="form-inline" id="formtagdel" method="post">  
-                                                        <?= $getT->getTag($vtags['IDT'])[0]->TAG ?>
-                                                        <input type="hidden" name="idf" id="idf" value="<?=$id?>" />
-                                                        <input type="submit" id="<?=$vtags['IDT']?>" style="color:red;" class="btn btn-link deletetag" value="X" />
-                                                </form>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                    <form class="form-inline" method="post" id="formtag">
-                                        <input type="hidden" name="id" value="<?=$id; ?>" />
-                                        <input type="text" class="form-control" name="tag" placeholder="Nom du tag" list="tags" />
-                                        <datalist id="tags">
-                                            <?php foreach ($tags as $ve) : ?>
-                                                <option value="<?=$ve['TAG']; ?>">
-                                                <?php endforeach; ?>
-                                        </datalist>
-                                        <input type="submit" class="btn btn-success validatetag" value="+" />
+                                <ul>
+                                    <?php foreach ($tagsList as $vtags) : ?>
+                                        <li>
+                                            <form class="form-inline" id="formtagdel" method="post">
+                                                <?= $getT->getTag($vtags['IDT'])[0]->TAG ?>
+                                                <input type="hidden" name="idf" id="idf" value="<?= $id ?>" />
+                                                <input type="submit" id="<?= $vtags['IDT'] ?>" style="color:red;" class="btn btn-link deletetag" value="X" />
+                                            </form>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <form class="form-inline" method="post" id="formtag">
+                                    <input type="hidden" name="id" value="<?= $id; ?>" />
+                                    <input type="text" class="form-control" name="tag" placeholder="Nom du tag" list="tags" />
+                                    <datalist id="tags">
+                                        <?php foreach ($tags as $ve) : ?>
+                                            <option value="<?= $ve['TAG']; ?>">
+                                            <?php endforeach; ?>
+                                    </datalist>
+                                    <input type="submit" class="btn btn-success validatetag" value="+" />
 
-                                    </form>
+                                </form>
 
                                 <p class="text-right">
                                     <button class="btn btn-primary"><i class="fe-eye"></i> View</button>
@@ -154,11 +154,18 @@ include 'Public/Includes/head.php';?>
                                                     <div class="card">
                                                         <h5 class="card-header" style="background-color:dodgerblue ;color:white">Version Control</h5>
                                                         <div class="card-body">
-                                                            <p class="card-text">
+                                                            <p class="card-text" align="center">
+                                                            <?php //print_r(json_encode($getVersion));?>
+                                                            <div class="btn-group mb-2">
                                                                 <button class="btn btn-primary"><i class="fe-download"></i> Download</button>
-                                                                <button class="btn btn-primary"><i class="fe-upload"></i> Upload</button>
-                                                                <button class="btn btn-primary"><i class="fe-corner-left-down"></i> Rollback</button>
+                                                                <button type="button" class="btn btn-primary dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false"> Versions <span class="badge badge-danger badge-pill"><?=count($getVersion)?></span> <i class="mdi mdi-chevron-down"></i> </button>
+                                                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                    <?php foreach($getVersion as $version):?>
+                                                                    <a class="dropdown-item restorev" id='<?= $version->ID?>'  href="#">Version <?=$version->VERSION?></a>
+                                                                    <?php endforeach ?>
+                                                                </div>
                                                                 <button class="btn btn-primary"><i class="fe-lock"></i> Lock</button>
+                                                            </div>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -167,9 +174,8 @@ include 'Public/Includes/head.php';?>
                                                     <div class="card">
                                                         <h5 class="card-header" style="background-color:dodgerblue ;color:white">Edit</h5>
                                                         <div class="card-body">
-                                                            <p class="card-text">
-                                                                <button class="btn btn-primary"><i class="fe-edit"></i> Edit</button>
-                                                                <button class="btn btn-primary"><i class="fe-edit-1"></i> Rename</button>
+                                                            <p class="card-text" align="center">
+                                                                <a href="index.php?p=editFile&id=<?= $file->ID ?>" class='btn btn-primary' title='Modifier'><i class='fas fa-edit'></i> Edit</a>
                                                                 <button class="btn btn-primary"><i class="fe-eye-off"></i> Hide</button>
                                                             </p>
                                                         </div>

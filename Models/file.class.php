@@ -7,16 +7,14 @@ Class File
     public $fileState;
     
     function __construct() {   
-        // echo (str_replace('files', 'Public/Uploads', $url));die();
 
-        // var_dump($_SERVER);die();
+        // var_dump($_FILES);die();
+
         $this->extAccepted = array(
-            "application/pdf",
-            "application/excel",
-            "application/word",
-            "image/jpeg",
-            "image/png",
-            "image/gif"
+            "application/pdf","application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "image/jpeg","video/mpeg","image/png","audio/mpeg",
+            "image/gif","video/mp4","video/x-matroska"
         );
         
     }
@@ -62,7 +60,7 @@ Class File
             $url .= "://";
             $url .= $_SERVER['HTTP_HOST'];
             $url .= $_SERVER['REQUEST_URI']; 
-           $add= $this->addToDb($fileName, $namev,$type, str_replace('Public\Script\File\addfile.php', 'Public\Uploads', $url).'/'.$fileName , 
+           $add= $this->addToDb($fileName, $namev,$type, str_replace('Public/Script/File/addfile.php', 'Public\Uploads', $url).'/'.$fileName , 
             $destDir.DIRECTORY_SEPARATOR.$fileName,$size,$desc,$user,$idp,$idc);
             if($add){
                 header('Location:../../../files');
@@ -114,10 +112,26 @@ Class File
     }
     public function getFilesByKeyWord($kw){
         $db = getConnection();
-        $r = $db->prepare("SELECT * FROM tbl_files WHERE name LIKE :queryString OR nameView LIKE :queryString OR keywords LIKE :queryString OR description LIKE :queryString");
+        $r = $db->prepare("SELECT * FROM tbl_files WHERE NAMEF LIKE :queryString OR NAMEVIEW LIKE :queryString OR TYPEF LIKE :queryString OR DESCRIPTIONF LIKE :queryString OR KEYWORDS LIKE :queryString");
         $r->execute([':queryString' => '%'.$kw.'%']);
         return $r->fetchAll();
     }
+    
+    public function getFilesByDate($from,$to){
+        $db = getConnection();
+        $r = $db->prepare("SELECT * FROM tbl_files
+        WHERE CREATEDAT BETWEEN '?' AND '?'");
+        $r->execute([$from,$to]);
+        return $r->fetchAll();
+    }
+    
+    public function getFilesByFolder($folderId){
+        $db = getConnection();
+        $r = $db->prepare("SELECT * FROM tbl_files WHERE IDD=? ");
+        $r->execute([$folderId]);
+        return $r->fetchAll();
+    }
+
     public function getTheFile($id){
         $db = getConnection();
         $matP = $db->prepare("SELECT * FROM tbl_files WHERE ID=? LIMIT 1");
@@ -136,15 +150,81 @@ Class File
         }
          return $tbP;
     }
-    public  function updateNameAndCategory($id,$name,$category,$descrition,$kw) {
-        $r = $this->db->prepare("UPDATE tbl_files SET nameView=?, category_id=?, description=?, keywords=? WHERE id=?");
+    
+    public function updateFile($file,$namev=0,$idp=0,$idc=0,$desc=0,$user=0,$kw=0,$vers=0,$id){
+        
+        $destDir = str_replace('Models\file.class.php', 'Public\Uploads', __FILE__);
+
+        // var_dump($id);die();$_POST['kw'],
+        //les datas from file
+        $name = $file['fichier']['name'];
+        $fileName= time().'_'.$name;
+        $type = $file['fichier']['type'];
+        $tmpName = $file['fichier']['tmp_name'];
+        $error = $file['fichier']['error'];
+        $size = $file['fichier']['size'];
+
+        if($this->isup($tmpName)){
+            $this->fileState.="le fihier n'as pas été uploader de maniere régulière";
+            echo "<span class='alert alert-success alert-lg col-sm-12'>le fichier n'as pas été uploader de maniere réguilere
+            <button type='button' class='close' data-dismiss='alert'>x</button></span>";
+            die();
+        }
+        if(!in_array($type, $this->extAccepted)){  
+            echo "<span class='alert alert-danger alert-lg col-sm-12'>le format ".$type." est incorrecte <button type='button' class='close' data-dismiss='alert'>x</button></span>";          
+            die();
+        }
+        // if(preg_match('#[\x00-\x1F\x7F-\x9F/\\\\]#', $name )){
+        //     echo 'tentative de hack';
+        //     die();
+        // }
+        if($error !="0"){
+            echo "<span class='alert alert-danger alert-lg col-sm-12'>erreur d\'upload <button type='button' class='close' data-dismiss='alert'>x</button></span>";          
+            die();
+        }
+        if($size > 100000000){
+            echo "<span class='alert alert-danger alert-lg col-sm-12'>erreur de taille : ".$size." Trop lourde<button type='button' class='close' data-dismiss='alert'>x</button></span>";          
+            die();
+        }
+        if(move_uploaded_file($tmpName, $destDir.DIRECTORY_SEPARATOR.$fileName)){ 
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+                $url = "https";
+            } else {
+                $url = "http";
+            }
+            $url .= "://";
+            $url .= $_SERVER['HTTP_HOST'];
+            $url .= $_SERVER['REQUEST_URI']; 
+            $add= $this->updateFiles($fileName, $namev,$type, str_replace('Public/Script/File/editfile.php', 'Public\Uploads', $url).'/'.$fileName , 
+            $destDir.DIRECTORY_SEPARATOR.$fileName,$size,$desc,$user,$idp,$idc,$kw,$vers,$id);
+            header('Location:../../../files');
+                
+        }else{
+            echo "<span class='alert alert-danger alert-lg col-sm-12'>Le fichier n'à pas été telechargé.<button type='button' class='close' data-dismiss='alert'>x</button></span>";          
+           
+        }
+    }
+
+    public  function updateFiles($fileName,$namev,$fileType,$fileUrl,$filePath,$size,$desc,$user,$idp, $idc,$kw,$vers,$id) {
+
+        $db = getConnection();
+        $r =$db->prepare("SELECT * FROM tbl_files WHERE ID = ?");
+        $r->execute([$id]);
+        $n = $r->fetchAll(PDO::FETCH_OBJ)[0];
+        $s = serialize($n);
+        $name=$n->NAMEVIEW;
+        $version=$n->VERSION;
+        $id=$n->ID;
+        $r = $db->prepare("INSERT INTO tbl_files_version SET FILE_NAMEF=?, DATAF=?, VERSION=?, IDF=?");
         $r->execute([
             $name,
-            $category,
-            $descrition,
-            $kw,
+            $s,
+            $version,
             $id
-        ]);
+        ]);      
+        $r = $db->prepare("UPDATE tbl_files SET NAMEF=?, NAMEVIEW=?, TYPEF=?,URLF=?, PATHF=?,SIZEF=?,
+         DESCRIPTIONF=?, IDU=?, IDD=?, IDC=?, KEYWORDS=?, VERSION=? WHERE ID=?");
+        $r->execute([$fileName,$namev,$fileType,$fileUrl,$filePath,$size,$desc,$user,$idp, $idc,$kw,$vers,$id]);
     }
 
     public function moveToTrash($id){
@@ -173,6 +253,60 @@ Class File
         return $r->fetchAll(PDO::FETCH_OBJ);
     }
 
+    //all file version
+    public function getFileVersion($id){
+        $db = getConnection();
+        $r = $db->prepare("SELECT * FROM tbl_files_version WHERE IDF=?");
+        $r->execute(array($id));
+        $tbP = array();
+        while($data =  $r->fetchObject()){
+            $tbP[] = $data;
+        }
+        return $tbP;
+    }
+    
+    public function backVersion($versionId){
+        $db = getConnection();
+        $bv = $db->prepare("SELECT * FROM tbl_files_version WHERE ID = ?");
+        $bv->execute([$versionId]);
+        $n = $bv->fetchAll(PDO::FETCH_OBJ)[0];
+        $o = unserialize($n->DATAF);
+        $idf=$n->ID;
+        // $r1 =$db->prepare("SELECT * FROM tbl_files WHERE ID = ?");
+        // $r1->execute([$idf]);
+        // $n1 = $r1->fetchAll(PDO::FETCH_OBJ)[0];
+        // $s1 = serialize($n1);
+        // $name=$n1->NAMEVIEW;
+        // $version=$n1->VERSION;
+        // $id=$n1->ID;
+        // $r1 = $db->prepare("INSERT INTO tbl_files_version SET FILE_NAMEF=?, DATAF=?, VERSION=?, IDF=?");
+        // $r1->execute([
+        //     $name,
+        //     $s1,
+        //     $version,
+        //     $id
+        // ]); 
+        
+        $bv = $db->prepare("INSERT INTO tbl_files SET ID=?, NAMEF=?, NAMEVIEW=?, TYPEF=?, CREATEDAT=?, 
+        URLF=?, PATHF=?, IDC=?, IDD=?, IDU=?, SIZEF=?, DESCRIPTIONF=?, KEYWORDS=?, VERSION=?");
+        $a= $bv->execute([
+            $o->ID,
+            $o->NAMEF,
+            $o->NAMEVIEW,
+            $o->TYPEF,
+            $o->CREATEDAT,
+            $o->URLF,
+            $o->PATHF,
+            $o->IDC,
+            $o->IDD,
+            $o->IDU,
+            $o->SIZEF,
+            $o->DESCRIPTIONF,
+            $o->KEYWORDS,
+            $o->VERSION
+        ]);
+        // var_dump($o->NAMEF);
+    }
     
     public function backFile($trashId){
         $db = getConnection();
@@ -201,9 +335,6 @@ Class File
         ]);
         $rb = $db->prepare("DELETE FROM tbl_trash WHERE ID=?");
         $rb->execute([$trashId]);
-        //var_dump($o);
-        //die();
-        
     }
 
     //supprimer de la corbeille
