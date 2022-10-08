@@ -38,6 +38,7 @@
 		$file2 =  $getFile->getTheFile2($id);
 		$tagsList = $getT->getTagByFile($id);
 		$getVersion = $getFile->getFileVersion($id);
+		$getV = $getFile->getFileV($id);
 	    include('Vues/File/file.php');
     }
 	

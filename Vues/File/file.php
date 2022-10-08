@@ -70,13 +70,11 @@ include 'Public/Includes/head.php'; ?>
                                 </form>
 
                                 <p class="text-right">
-                                    <button class="btn btn-primary"><i class="fe-eye"></i> View</button>
-                                    <!-- <a href="index.php?p=tags&id=<?= $file->ID ?>" class="btn btn-primary"><i class="fe-paperclip"></i> Tagging</a> -->
-                                    <button class="btn btn-primary"><i class="fe-navigation"></i> Share with users</button>
+                                    <a href="<?= $file->URLF ?>" target="_blank" class="btn btn-primary"><i class="fe-eye"></i> View</a>
+                                    <button class="btn btn-primary" id="share"><i class="fe-navigation"></i> Share with users</button>
                                     <button id="<?= $file->ID ?>" class="btn btn-danger p-l delete"><i class="fe-trash-2"></i> Delete</button>
                                 </p>
-
-
+                                
                                 <div class="card-box">
                                     <h4 class="header-title mb-4">Details of:<?= $file->NAMEVIEW ?> </h4>
 
@@ -97,7 +95,7 @@ include 'Public/Includes/head.php'; ?>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="card">
-                                                        <h5 class="card-header" style="background-color:dodgerblue ;color:white">Document Current Version</h5>
+                                                        <h5 class="card-header" style="background-color:dodgerblue ;color:white">Document Current Version <span class="badge badge-danger badge-pill"><?=$file->VERSION?></h5>
                                                         <div class="card-body">
                                                             <p class="card-text">
                                                                 <label for="">Document Name</label><br>
@@ -157,7 +155,7 @@ include 'Public/Includes/head.php'; ?>
                                                             <p class="card-text" align="center">
                                                             <?php //print_r(json_encode($getVersion));?>
                                                             <div class="btn-group mb-2">
-                                                                <button class="btn btn-primary"><i class="fe-download"></i> Download</button>
+                                                                <a href="<?=$file->URLF?>" target="blank" class="btn btn-primary"><i class="fe-download"></i> Download</a>
                                                                 <button type="button" class="btn btn-primary dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false"> Versions <span class="badge badge-danger badge-pill"><?=count($getVersion)?></span> <i class="mdi mdi-chevron-down"></i> </button>
                                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                                     <?php foreach($getVersion as $version):?>
@@ -176,6 +174,7 @@ include 'Public/Includes/head.php'; ?>
                                                         <div class="card-body">
                                                             <p class="card-text" align="center">
                                                                 <a href="index.php?p=editFile&id=<?= $file->ID ?>" class='btn btn-primary' title='Modifier'><i class='fas fa-edit'></i> Edit</a>
+                                                                <button class="btn btn-primary"><i class="fe-edit-1"></i> Rename</button>
                                                                 <button class="btn btn-primary"><i class="fe-eye-off"></i> Hide</button>
                                                             </p>
                                                         </div>

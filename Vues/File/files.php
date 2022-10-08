@@ -84,7 +84,7 @@ include 'Public/Includes/head.php'; ?>
                                             ?>
                                         <tr>
                                             <td><?=$file->ID?></td>
-                                            <td><i class='fas fa-file'></i> <a href="index.php?p=file&id=<?= $file->ID ?>"><?=$file->NAMEF?></a></td>
+                                            <td><i class='fas fa-file'></i> <a href="index.php?p=file&id=<?= md5($file->ID) ?>"><?=$file->NAMEF?></a></td>
                                             <td><?=$folder?></td>
                                             <td><?=$category?></td>
                                             <td>

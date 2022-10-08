@@ -26,6 +26,9 @@ $(document).ready(function () {
     }
   });
 
+	$(document).on("click","'#share'",function(){
+		uni_modal("<i class='fa fa-share'></i> Share this document using the link.","modal_share_link.php?did=<?php echo md5($id) ?>")
+	});
   //restorer la version
   $(document).on("click", ".restorev", function (event) {
     event.preventDefault();
@@ -36,14 +39,14 @@ $(document).ready(function () {
         method: "POST",
         data: { id: id },
         success: function (data) {
-          // Swal.fire({
-          //   position: "top-end",
-          //   icon: "success",
-          //   title: "Success",
-          //   showConfirmButton: false,
-          //   timer: 1500,
-          // });
-          // setInterval(refreshPage, 1000);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setInterval(refreshPage, 1000);
         },
       });
     }

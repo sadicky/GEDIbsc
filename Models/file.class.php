@@ -134,7 +134,7 @@ Class File
 
     public function getTheFile($id){
         $db = getConnection();
-        $matP = $db->prepare("SELECT * FROM tbl_files WHERE ID=? LIMIT 1");
+        $matP = $db->prepare("SELECT * FROM tbl_files WHERE  md5(ID) = '{$id}' LIMIT 1");
         $matP->execute(array($id));
         $res =  $matP->fetchObject();
         return $res;
@@ -264,6 +264,13 @@ Class File
         }
         return $tbP;
     }
+    public function getFileV($id){
+        $db = getConnection();
+        $r = $db->prepare("SELECT DISTINCT VERSION FROM tbl_files_version WHERE IDF=?");
+        $r->execute(array($id));
+       $data =  $r->fetchObject();
+        return $data;
+    }
     
     public function backVersion($versionId){
         $db = getConnection();
@@ -272,22 +279,26 @@ Class File
         $n = $bv->fetchAll(PDO::FETCH_OBJ)[0];
         $o = unserialize($n->DATAF);
         $idf=$n->ID;
-        // $r1 =$db->prepare("SELECT * FROM tbl_files WHERE ID = ?");
-        // $r1->execute([$idf]);
-        // $n1 = $r1->fetchAll(PDO::FETCH_OBJ)[0];
-        // $s1 = serialize($n1);
-        // $name=$n1->NAMEVIEW;
-        // $version=$n1->VERSION;
-        // $id=$n1->ID;
-        // $r1 = $db->prepare("INSERT INTO tbl_files_version SET FILE_NAMEF=?, DATAF=?, VERSION=?, IDF=?");
-        // $r1->execute([
-        //     $name,
-        //     $s1,
-        //     $version,
-        //     $id
-        // ]); 
+        $versionf=$n->VERSION;
+
         
-        $bv = $db->prepare("INSERT INTO tbl_files SET ID=?, NAMEF=?, NAMEVIEW=?, TYPEF=?, CREATEDAT=?, 
+        $r1 =$db->prepare("SELECT * FROM tbl_files WHERE ID = ?");
+        $r1->execute([$idf]);
+        $n1 = $r1->fetchAll(PDO::FETCH_OBJ)[0];
+        $s1 = serialize($n1);
+        $name=$n1->NAMEVIEW;
+        $version=$n1->VERSION;
+        $id=$n1->ID;
+
+        $r1 = $db->prepare("INSERT INTO tbl_files_version SET FILE_NAMEF=?, DATAF=?, VERSION=?, IDF=?");
+        $r1->execute([
+            $name,
+            $s1,
+            $version,
+            $id
+        ]);
+        
+        $bv = $db->prepare("UPDATE tbl_files SET ID=?, NAMEF=?, NAMEVIEW=?, TYPEF=?, CREATEDAT=?, 
         URLF=?, PATHF=?, IDC=?, IDD=?, IDU=?, SIZEF=?, DESCRIPTIONF=?, KEYWORDS=?, VERSION=?");
         $a= $bv->execute([
             $o->ID,
@@ -304,8 +315,8 @@ Class File
             $o->DESCRIPTIONF,
             $o->KEYWORDS,
             $o->VERSION
-        ]);
-        // var_dump($o->NAMEF);
+        ]);        
+
     }
     
     public function backFile($trashId){
