@@ -2,7 +2,7 @@
 $lang = array(
     "Dashboard" =>"Tableau de Bord",
     "Search Documents"=>"Rechercher Doc",
-    "All Documents"=>"Tous les documents",
+    "Documents"=>"Documents",
     "Folders"=>"Dossiers",
     "Documents Uploads"=>"Téléverser",
     "Create"=>"Créer",

@@ -54,8 +54,7 @@ include 'Public/Includes/head.php'; ?>
                                             <th>#</th>
                                             <th>Documents</th>
                                             <th>Folder</th>
-                                            <th>Categoty</th>
-                                            <th>Tags</th>
+                                            <th>Category</th>
                                             <th>Author</th>
                                             <th>View</th>
                                             <th>Actions</th>
@@ -87,14 +86,9 @@ include 'Public/Includes/head.php'; ?>
                                             <td><i class='fas fa-file'></i> <a href="index.php?p=file&id=<?= md5($file->ID) ?>"><?=$file->NAMEF?></a></td>
                                             <td><?=$folder?></td>
                                             <td><?=$category?></td>
-                                            <td>
-                                                 <?php foreach ($tagListOfTheFile as $v): ?>
-                                                    <a href="#" class="btn btn-success btn-xs"><?=$getT->getTag($v['IDT'])[0]->TAG;?></a>,                                             
-                                                 <?php endforeach; ?>
-                                            </td>
                                             <td>SADICKY Dave</td>
                                             <td>
-                                            <a href="<?= $file->URLF ?>" target='blank' class='btn btn-block btn-xs btn-primary' ><i class='fe-eye' ></i> </a>
+                                            <a href="<?= $file->URLF ?>" target='blank' class='btn btn-xs btn-primary' ><i class='fe-eye' ></i> </a>
                                               </td>
                                             <td class="text-center">  
                                                 <a href="index.php?p=editFile&id=<?= md5($file->ID) ?>" class='btn btn-xs btn-primary'  title='Modifier'><i class='fas fa-edit'></i></a>

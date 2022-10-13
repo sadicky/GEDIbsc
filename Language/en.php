@@ -2,7 +2,7 @@
 $lang = array(
     "Dashboard" =>"Dashboard",
     "Search Documents"=>"Search Documents",
-    "All Documents"=>"All Documents",
+    "Documents"=>"Documents",
     "Folders"=>"Folders",
     "Documents Uploads"=>"Documents Uploads",
     "Create"=>"Create",
