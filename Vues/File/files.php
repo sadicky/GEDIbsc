@@ -97,7 +97,7 @@ include 'Public/Includes/head.php'; ?>
                                             <a href="<?= $file->URLF ?>" target='blank' class='btn btn-block btn-xs btn-primary' ><i class='fe-eye' ></i> </a>
                                               </td>
                                             <td class="text-center">  
-                                                <a href="index.php?p=editFile&id=<?= $file->ID ?>" class='btn btn-xs btn-primary'  title='Modifier'><i class='fas fa-edit'></i></a>
+                                                <a href="index.php?p=editFile&id=<?= md5($file->ID) ?>" class='btn btn-xs btn-primary'  title='Modifier'><i class='fas fa-edit'></i></a>
                                                  <button type='button' name='delete' id='<?= $file->ID?>' class='btn btn-xs btn-danger delete' title='Supprimer'><i class='fe-trash'></i></button>
                                             </td>
                                         </tr>

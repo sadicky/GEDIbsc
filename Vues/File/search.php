@@ -1,22 +1,21 @@
-<?php $title = "Search File";
+<?php $title = $lang['Search'];
 include 'Public/Includes/head.php';
 
-if(isset($_POST['action'])){
-    if($_POST['action']=="searchByCat"){
-        $categoryId=$_POST['category'];
+if (isset($_POST['action'])) {
+    if ($_POST['action'] == "searchByCat") {
+        $categoryId = $_POST['category'];
         $fileList = $getFile->getFilesByCategory($categoryId);
     }
-    if($_POST['action']=="searchByKW"){
-        $kw=$_POST['keyword'];
+    if ($_POST['action'] == "searchByKW") {
+        $kw = htmlentities(trim($_POST['keyword']));
         $fileList = $getFile->getFilesByKeyWord($kw);
     }
-    if($_POST['action']=="searchByDate"){
-        $from=$_POST['from'];
-        $to=$_POST['to'];
-        $fileList = $getFile->getFilesByDate($from,$to);
+    if ($_POST['action'] == "searchByDate") {
+        $date = $_POST['date'];
+        $fileList = $getFile->getFilesByDate($date,'');
     }
-    if($_POST['action']=="searchByFolder"){
-        $folderId=$_POST['folder'];
+    if ($_POST['action'] == "searchByFolder") {
+        $folderId = $_POST['folder'];
         $fileList = $getFile->getFilesByFolder($folderId);
     }
 }
@@ -68,35 +67,35 @@ if(isset($_POST['action'])){
                                     <ul class="nav nav-tabs nav-bordered nav-justified">
                                         <li class="nav-item">
                                             <a href="#gI" data-toggle="tab" aria-expanded="true" class="nav-link active">
-                                            SEARCH DOCUMENT
+                                                <?=$lang['Search Documents']?>
                                             </a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="gI">
                                             <br>
-                                        <?php if(isset($_POST['submit'])):?>
-                                            <div class="row">                                                
-                                                <h5 style="color:red;"><?=count($fileList); ?> result(s)</h5><br>
-                                                <ul class="well">
-                                                <?php foreach ($fileList as $value): ?>
-                                                    <li class="fileLink"><a href="index.php?p=file&id=<?= $value['ID'] ?>"> <?= $value['NAMEVIEW']; ?></a></li>
-                                                <?php endforeach; ?>
-                                                </ul>
-                                            </div>
-                                            <?php endif?><br>
+                                            <?php if (isset($_POST['submit'])) : ?>
+                                                <div class="row">
+                                                    <h5 style="color:red;"><?= count($fileList); ?> result(s)</h5><br>
+                                                    <ul class="well">
+                                                        <?php foreach ($fileList as $value) : ?>
+                                                            <li class="fileLink"><a href="index.php?p=file&id=<?= $value['ID'] ?>"> <?= $value['NAMEVIEW']; ?></a></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </div>
+                                            <?php endif ?><br>
 
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="card">
-                                                        <h5 class="card-header" style="background-color:dodgerblue ;color:white">Search Document by Keyword</h5>
+                                                        <h5 class="card-header" style="background-color:dodgerblue ;color:white"> <?=$lang['Search Document by Keyword']?></h5>
                                                         <div class="card-body">
-                                                            <p class="card-text">                                                                
-                                                                <form class="form-inline" method="post">
-                                                                    <input type="hidden" name="action" value="searchByKW" /> 
-                                                                    <input type="text" class="form-control" name="keyword">
-                                                                    <button type="submit" class="btn btn-md btn-primary" name="submit"><i class="fe-search"></i></button>                                                                    
-                                                                </form>
+                                                            <p class="card-text">
+                                                            <form class="form-inline" method="post">
+                                                                <input type="hidden" name="action" value="searchByKW" />
+                                                                <input type="text" class="form-control" name="keyword">
+                                                                <button type="submit" class="btn btn-md btn-primary" name="submit"><i class="fe-search"></i></button>
+                                                            </form>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -105,18 +104,12 @@ if(isset($_POST['action'])){
                                                     <div class="card">
                                                         <h5 class="card-header" style="background-color:dodgerblue ;color:white">Search Document by Date of Creation</h5>
                                                         <div class="card-body">
-                                                            <div class="card-text">                                                               
+                                                            <div class="card-text">
                                                                 <form class="form-inline" id="formsearcat" method="post">
-                                                                    <input type="hidden" name="action" value="searchByDate" />
-                                                                        <div class="form-group">
-                                                                            <label>From</label>
-                                                                            <input type="date" name="from" class="form-control">
-                                                                        </div>	
-                                                                        <div class="form-group">
-                                                                            <label>To</label>
-                                                                            <input type="date" name="to" class="form-control">
-                                                                        </div>	
-                                                                    <button type="submit" class="btn btn-md btn-primary"  name="submit"><i class="fe-search"></i></button>                                                                     
+                                                                    <div class="form-group">
+                                                                        <input type="text" id="reportrange" name="date" class="form-control" />
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-md btn-primary" name="submit"><i class="fe-search"></i></button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -126,16 +119,16 @@ if(isset($_POST['action'])){
                                                     <div class="card">
                                                         <h5 class="card-header" style="background-color:dodgerblue ;color:white">Search Document by Category</h5>
                                                         <div class="card-body">
-                                                            <div class="card-text">                                                              
+                                                            <div class="card-text">
                                                                 <form class="form-inline" method="post">
-                                                                    <input type="hidden" name="action" value="searchByCat" /> 
+                                                                    <input type="hidden" name="action" value="searchByCat" />
                                                                     <select class="form-control select2" name="category">
                                                                         <option value="0">Not&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</option>
-                                                                        <?php foreach ($getC as $ve): ?>
-                                                                        <option value="<?= $ve->ID ?>"><?= $ve->CATEGORIE ?></option>
+                                                                        <?php foreach ($getC as $ve) : ?>
+                                                                            <option value="<?= $ve->ID ?>"><?= $ve->CATEGORIE ?></option>
                                                                         <?php endforeach; ?>
                                                                     </select>
-                                                                    <button type="submit" class="btn btn-xs btn-primary"  name="submit"><i class="fe-search"></i></button>                                                                     
+                                                                    <button type="submit" class="btn btn-xs btn-primary" name="submit"><i class="fe-search"></i></button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -145,16 +138,16 @@ if(isset($_POST['action'])){
                                                     <div class="card">
                                                         <h5 class="card-header" style="background-color:dodgerblue; color:white">Search Document by Folder</h5>
                                                         <div class="card-body">
-                                                            <div class="card-text">                       
-                                                                <form class="form-inline"  method="post">
-                                                                    <input type="hidden" name="action" value="searchByFolder" /> 
+                                                            <div class="card-text">
+                                                                <form class="form-inline" method="post">
+                                                                    <input type="hidden" name="action" value="searchByFolder" />
                                                                     <select class="form-control select2" name="folder">
                                                                         <option value="0">Not&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</option>
-                                                                        <?php foreach ($getF as $ve): ?>
-                                                                        <option value="<?= $ve->ID ?>"><?=$ve->FOLDER?></option>
+                                                                        <?php foreach ($getF as $ve) : ?>
+                                                                            <option value="<?= $ve->ID ?>"><?= $ve->FOLDER ?></option>
                                                                         <?php endforeach; ?>
                                                                     </select>
-                                                                    <button type="submit" class="btn btn-xs btn-primary"  name="submit"><i class="fe-search"></i></button>                                                                     
+                                                                    <button type="submit" class="btn btn-xs btn-primary" name="submit"><i class="fe-search"></i></button>
                                                                 </form>
                                                             </div>
                                                         </div>

@@ -117,11 +117,11 @@ Class File
         return $r->fetchAll();
     }
     
-    public function getFilesByDate($from,$to){
+    public function getFilesByDate($from){
         $db = getConnection();
         $r = $db->prepare("SELECT * FROM tbl_files
-        WHERE CREATEDAT BETWEEN '?' AND '?'");
-        $r->execute([$from,$to]);
+        WHERE CREATEDAT BETWEEN '?' ");
+        $r->execute([$from]);
         return $r->fetchAll();
     }
     
@@ -134,7 +134,7 @@ Class File
 
     public function getTheFile($id){
         $db = getConnection();
-        $matP = $db->prepare("SELECT * FROM tbl_files WHERE  md5(ID) = '{$id}' LIMIT 1");
+        $matP = $db->prepare("SELECT * FROM tbl_files WHERE  md5(ID) = ? LIMIT 1");
         $matP->execute(array($id));
         $res =  $matP->fetchObject();
         return $res;
@@ -142,7 +142,7 @@ Class File
 
     public function getTheFile2($id){
         $db = getConnection();
-        $matP = $db->prepare("SELECT * FROM tbl_files WHERE ID=? LIMIT 1");
+        $matP = $db->prepare("SELECT * FROM tbl_files WHERE md5(ID) =? LIMIT 1");
         $matP->execute(array($id));
         $tbP = array();
         while($data =  $matP->fetchObject()){
@@ -256,7 +256,7 @@ Class File
     //all file version
     public function getFileVersion($id){
         $db = getConnection();
-        $r = $db->prepare("SELECT * FROM tbl_files_version WHERE IDF=?");
+        $r = $db->prepare("SELECT * FROM tbl_files_version WHERE md5(IDF)=?");
         $r->execute(array($id));
         $tbP = array();
         while($data =  $r->fetchObject()){
@@ -266,7 +266,7 @@ Class File
     }
     public function getFileV($id){
         $db = getConnection();
-        $r = $db->prepare("SELECT DISTINCT VERSION FROM tbl_files_version WHERE IDF=?");
+        $r = $db->prepare("SELECT DISTINCT VERSION FROM tbl_files_version WHERE md5(IDF)=?");
         $r->execute(array($id));
        $data =  $r->fetchObject();
         return $data;
@@ -360,6 +360,8 @@ Class File
         $rb->execute([$trashId]);
         $ra = $db->prepare("DELETE FROM tbl_files_tags WHERE IDF=?");
         $ra->execute([$o->ID]);
+        $rc = $db->prepare("DELETE FROM tbl_files_version WHERE IDF=?");
+        $rc->execute([$trashId]);
     }
 
     public function formatSizeUnits($bytes)

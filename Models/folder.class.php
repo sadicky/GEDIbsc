@@ -15,9 +15,14 @@ Class Folder
         $this->idu=$idu;
         $this->idp=$idp;
         $db = getConnection();
-        $add = $db->prepare("INSERT INTO tbl_folders (FOLDER,IDP,IDU) VALUES (?,?,?)");
-        $addline = $add->execute(array($folder,$idp,$idu)) or die(print_r($add->errorInfo()));
-        return $addline;
+        if(!file_exists($folder)){
+            mkdir($folder,0777,true);
+            $add = $db->prepare("INSERT INTO tbl_folders (FOLDER,IDP,IDU) VALUES (?,?,?)");
+            $addline = $add->execute(array($folder,$idp,$idu)) or die(print_r($add->errorInfo()));
+            return $addline;
+        }else{
+            echo "<span class='alert alert-danger alert-lg col-sm-12'>Field already created.<button type='button' class='close' data-dismiss='alert'>x</button></span>";
+        }
     }
 
     //afficher touts les folders
@@ -83,22 +88,6 @@ Class Folder
         $matP->execute(array($idcat));
         $res =  $matP->fetchAll();
         return $res;
-    }
-	
-    //activer une FOLDERS
-     public function activCat($idcat){
-         $db = getConnection();
-         $sql =$db->prepare( "UPDATE tbl_folders SET STATUT='1' WHERE ID=?");
-         $ok = $sql->execute(array($idcat));
-        return $ok;
-     }
-     
-     //desactiver une FOLDERS
-    public function deactivCat($idcat){
-        $db = getConnection();
-        $sql =$db->prepare( "UPDATE tbl_folders SET STATUT='0' WHERE ID=?");
-        $ok = $sql->execute(array($idcat));
-        return $ok;
     }
 }
 ?>

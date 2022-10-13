@@ -22,7 +22,8 @@
 	function dashboard(){
 		require_once('Models/category.class.php');
 		require_once('Models/folder.class.php');
-		require_once('Models/file.class.php');
+		require_once('Models/file.class.php');	
+		include 'Language/config.php';
 		$getCategory= new Category();		
 		$getFile= new File();		
 		$getFolder= new Folder();		
@@ -30,5 +31,6 @@
 		$getF = $getFolder->getFolders();
 		$files = $getFile->getFiles();
 		$list= $getFile->getAllTrash();
+		$files = $getFile->getFiles();
 	    include('Vues/Admin/dashboard.php');
     }

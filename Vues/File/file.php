@@ -1,5 +1,8 @@
 <?php $title = $file->NAMEVIEW;
-include 'Public/Includes/head.php'; ?>
+include 'Public/Includes/head.php';
+// var_dump($_SERVER);die();
+// session_destroy();
+?>
 
 <body>
 
@@ -20,7 +23,6 @@ include 'Public/Includes/head.php'; ?>
 
         <div class="content-page">
             <div class="content">
-
                 <!-- Start Content-->
                 <div class="container-fluid">
 
@@ -43,7 +45,7 @@ include 'Public/Includes/head.php'; ?>
                     <div class="row">
                         <div class="col-12">
                             <p class="text-right">
-                                <a href="files" class="btn btn-primary"><i class="fe-arrow-left"></i> All Documents</a>
+                                <a href="files" class="btn btn-primary"><i class="fe-arrow-left"></i><?=$lang['All Documents']?></a>
                             </p>
                             <div class="card-box table-responsive">
                                 <ul>
@@ -70,9 +72,9 @@ include 'Public/Includes/head.php'; ?>
                                 </form>
 
                                 <p class="text-right">
-                                    <a href="<?= $file->URLF ?>" target="_blank" class="btn btn-primary"><i class="fe-eye"></i> View</a>
-                                    <button class="btn btn-primary" id="share"><i class="fe-navigation"></i> Share with users</button>
-                                    <button id="<?= $file->ID ?>" class="btn btn-danger p-l delete"><i class="fe-trash-2"></i> Delete</button>
+                                    <a href="<?= $file->URLF ?>" target="_blank" class="btn btn-primary"><i class="fe-eye"></i> <?=$lang['View']?></a>
+                                    <button class="btn btn-primary shared" id='<?= md5($file->ID)?>' ><i class="fe-navigation"></i> <?=$lang['Share With users']?></button>
+                                    <button id="<?= $file->ID ?>" class="btn btn-danger p-l delete"><i class="fe-trash-2"></i> <?=$lang['Delete']?></button>
                                 </p>
                                 
                                 <div class="card-box">
@@ -155,7 +157,7 @@ include 'Public/Includes/head.php'; ?>
                                                             <p class="card-text" align="center">
                                                             <?php //print_r(json_encode($getVersion));?>
                                                             <div class="btn-group mb-2">
-                                                                <a href="<?=$file->URLF?>" target="blank" class="btn btn-primary"><i class="fe-download"></i> Download</a>
+                                                                <a  href="index.php?p=download&file=<?= $file->URLF?>" target="blank" class="btn btn-primary"><i class="fe-download"></i> Download</a>
                                                                 <button type="button" class="btn btn-primary dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false"> Versions <span class="badge badge-danger badge-pill"><?=count($getVersion)?></span> <i class="mdi mdi-chevron-down"></i> </button>
                                                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                                     <?php foreach($getVersion as $version):?>
@@ -173,8 +175,8 @@ include 'Public/Includes/head.php'; ?>
                                                         <h5 class="card-header" style="background-color:dodgerblue ;color:white">Edit</h5>
                                                         <div class="card-body">
                                                             <p class="card-text" align="center">
-                                                                <a href="index.php?p=editFile&id=<?= $file->ID ?>" class='btn btn-primary' title='Modifier'><i class='fas fa-edit'></i> Edit</a>
-                                                                <button class="btn btn-primary"><i class="fe-edit-1"></i> Rename</button>
+                                                                <a href="index.php?p=editFile&id=<?= md5($file->ID)?>" class='btn btn-primary' title='Modifier'><i class='fas fa-edit'></i> Edit</a>
+                                                                <button  type="button" id="<?=md5($file->ID)?>" data-toggle="modal" data-target="#Rename" class="btn btn-primary rename"><i class="fe-edit-1"></i> Rename</button>
                                                                 <button class="btn btn-primary"><i class="fe-eye-off"></i> Hide</button>
                                                             </p>
                                                         </div>
@@ -210,7 +212,8 @@ include 'Public/Includes/head.php'; ?>
         <!-- END wrapper -->
 
         <?php include_once 'Public/Modals/File/addfile.php';
-        //   include_once 'Public/Modals/Category/editcat.php'; 
+              include_once 'Public/Modals/File/share.php';
+              include_once 'Public/Modals/File/rename.php';
         ?>
 
         <!-- Right bar overlay-->

@@ -1,0 +1,32 @@
+<?php
+$lang = array(
+    "Dashboard" =>"Tableau de Bord",
+    "Search Documents"=>"Rechercher Doc",
+    "All Documents"=>"Tous les documents",
+    "Folders"=>"Dossiers",
+    "Documents Uploads"=>"Téléverser",
+    "Create"=>"Créer",
+    "Scanned Documents"=>"Doc Scanner",
+    "All folders"=>"Tous les Dossiers",
+    "Documents Categories"=>"Catégories",
+    "Users"=>"Utilisateurs",
+    "Trash"=>"Corbeille",
+    "Settings"=>"Parametres",
+    "From Mail"=>"Par Email",
+    "Delete"=>"Supprimer",
+    "View"=>"Afficher",
+    "Share With users"=>"Partager le fichier",
+    "Language"=>"Langue",
+    "folders"=>"dossiers",
+    "Files"=>"fichiers",
+    "Uploads"=>"Téléverser",
+    "Documents"=>"Documents",
+    "Lists"=>"Listes",
+    "Search"=>"Rechercher",
+    "Manage folders"=>"Gestion de dossiers",
+    "Create"=>"Créer",
+    "View"=>"Afficher",
+    "Search Document by Keyword"=>"Rechercher par Mots clés",
+    
+);
+?>

@@ -1,4 +1,4 @@
-<?php $title = "Dashboard";
+<?php $title = _("Dashboard");
 include 'Public/Includes/head.php'; ?>
 
 <body>
@@ -44,7 +44,7 @@ include 'Public/Includes/head.php'; ?>
                         <div class="col-md-6 col-xl-3">
                             <div class="card-box tilebox-one">
                                 <i class="fe-briefcase float-right"></i>
-                                <h5 class="text-muted text-uppercase mb-3 mt-0">folders</h5>
+                                <h5 class="text-muted text-uppercase mb-3 mt-0"><?=$lang['Folders']?> </h5>
                                 <h3 class="mb-3" data-plugin="counterup"><?=count($getF)?></h3>
                            </div>
                         </div>
@@ -52,7 +52,7 @@ include 'Public/Includes/head.php'; ?>
                         <div class="col-md-6 col-xl-3">
                             <div class="card-box tilebox-one">
                                 <i class="fe-folder float-right"></i>
-                                <h5 class="text-muted text-uppercase mb-3 mt-0">Files</h5>
+                                <h5 class="text-muted text-uppercase mb-3 mt-0"><?=$lang['Files']?></h5>
                                 <h3 class="mb-3"><span data-plugin="counterup"><?=count($files)?></span></h3>
                             </div>
                         </div>
@@ -60,7 +60,7 @@ include 'Public/Includes/head.php'; ?>
                         <div class="col-md-6 col-xl-3">
                             <div class="card-box tilebox-one">
                                 <i class="fe-trash float-right"></i>
-                                <h5 class="text-muted text-uppercase mb-3 mt-0">Trash</h5>
+                                <h5 class="text-muted text-uppercase mb-3 mt-0"><?=$lang['Trash']?></h5>
                                 <h3 class="mb-3"><span data-plugin="counterup"><?=count($list)?></span></h3>
                              </div>
                         </div>
@@ -68,7 +68,7 @@ include 'Public/Includes/head.php'; ?>
                         <div class="col-md-6 col-xl-3">
                             <div class="card-box tilebox-one">
                                 <i class="fe-users float-right"></i>
-                                <h5 class="text-muted text-uppercase mb-3 mt-0">Users</h5>
+                                <h5 class="text-muted text-uppercase mb-3 mt-0"><?=$lang['Users']?></h5>
                                 <h3 class="mb-3" data-plugin="counterup">4</h3>
                             </div>
                         </div>
@@ -78,12 +78,12 @@ include 'Public/Includes/head.php'; ?>
                                 <div class="col-md-4">
                                     <div class="card">
                                         <h4 class="card-header text-center">
-                                            UPLOADS
+                                        <?=$lang['Uploads']?>
                                         </h4>
                                         <div class="card-body">
                                                 <p class="text-center">
-                                                    <a href="<?=WEBROOT?>files" class="btn btn-primary"><i class="far fa-file"></i> Documents</a>
-                                                    <a href="<?=WEBROOT?>foldercreate" class="btn btn-primary"><i class="far fa-folder-open"></i> Folders</a>
+                                                    <a href="<?=WEBROOT?>files" class="btn btn-primary"><i class="far fa-file"></i>  <?=$lang['Documents']?></a>
+                                                    <a href="<?=WEBROOT?>foldercreate" class="btn btn-primary"><i class="far fa-folder-open"></i> <?=$lang['Folders']?></a>
                                                 </p>
                                               
                                         </div>
@@ -92,13 +92,13 @@ include 'Public/Includes/head.php'; ?>
                                 <div class="col-md-4">
                                     <div class="card">
                                         <h4 class="card-header text-center">
-                                            DOCUMENTS
+                                        <?=$lang['Documents']?>
                                         </h4>
                                         <div class="card-body">
                                                 <p class="text-center">
-                                                    <a href="<?=WEBROOT?>files" class="btn btn-primary"><i class="fas fa-list"></i> Lists</a>
-                                                    <a href="<?=WEBROOT?>search" class="btn btn-primary"><i class="fe-search"></i> Search</a>
-                                                    <a href="<?=WEBROOT?>" class="btn btn-primary"><i class="fe-trash"></i> Trash</a>
+                                                    <a href="<?=WEBROOT?>files" class="btn btn-primary btn-sm"><i class="fas fa-list"></i> <?=$lang['Lists']?></a>
+                                                    <a href="<?=WEBROOT?>search" class="btn btn-primary btn-sm"><i class="fe-search"></i>  <?=$lang['Search']?></a>
+                                                    <a href="<?=WEBROOT?>trash" class="btn btn-danger btn-sm"><i class="fe-trash"></i> <?=$lang['Trash']?></a>
                                                 </p>
                                         </div>
                                     </div>
@@ -106,12 +106,12 @@ include 'Public/Includes/head.php'; ?>
                                 <div class="col-md-4">
                                     <div class="card">
                                         <h4 class="card-header text-center">
-                                            MANAGE FOLDERS
+                                        <?=$lang['Manage folders']?>
                                         </h4>
                                         <div class="card-body">
                                                 <p class="text-center">
-                                                    <a href="<?=WEBROOT?>foldercreate" class="btn btn-primary"><i class="fa fa-folder-plus"></i> Create</a>
-                                                    <a href="<?=WEBROOT?>folderall"  class="btn btn-primary"><i class="fe-eye"></i> View</a>
+                                                    <a href="<?=WEBROOT?>foldercreate" class="btn btn-primary"><i class="fa fa-folder-plus"></i>  <?=$lang['Create']?></a>
+                                                    <a href="<?=WEBROOT?>folderall"  class="btn btn-primary"><i class="fe-eye"></i>  <?=$lang['View']?></a>
                                                 </p>                                                    
                                         </div>
                                     </div>

@@ -2,12 +2,12 @@
 session_start();
 define('WEBROOT',str_replace('index.php', "", $_SERVER['SCRIPT_NAME']));
 define('ROOT',str_replace('index.php', "", $_SERVER['SCRIPT_FILENAME']));
-
 include 'Controlleurs/category.php';
 include 'Controlleurs/main.php';
 include 'Controlleurs/file.php';
 include 'Controlleurs/folder.php';
 include 'Controlleurs/tag.php';
+// var_dump($lang);die();
 if(isset($_GET['p'])){
 	$params = explode('/', $_GET['p']); 
 	//die(print_r($params));
@@ -70,6 +70,19 @@ if(isset($_GET['p'])){
 	{
 		FileEdit();
 	}
+	
+	//telecharger
+	else if($_GET['p']=='download')
+	{
+		Download();
+	}
+
+	//partager
+	else if($_GET['p']=='share')
+	{
+		Share();
+	}
+
 	//recupere un fichier
 	else if($_GET['p']=='trash')
 	{

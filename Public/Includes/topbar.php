@@ -3,15 +3,22 @@
 
         <li class="dropdown d-none d-lg-block">
             <a class="nav-link dropdown-toggle mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <img src="Assets/images/flags/us.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English <i class="mdi mdi-chevron-down"></i> </span>
+                <span class="align-middle"><?=$lang['Language']?> <i class="mdi mdi-chevron-down"></i> </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                <a href="dashboard?Lang=fr" class="dropdown-item notify-item">
                     <img src="Assets/images/flags/fr.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Français</span>
+                </a>
+                <a href="dashboard?Lang=en" class="dropdown-item notify-item">
+                    <img src="Assets/images/flags/us.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span>
                 </a>
 
             </div>
+
+        
+
+
         </li>
 
 
@@ -113,3 +120,10 @@
         </li>
     </ul>
 </div>
+
+<script>
+    function setLanguage(){
+        var l = $('#language').val();
+        window.location.href="/dashboard?Lang="+l;
+    }
+</script>

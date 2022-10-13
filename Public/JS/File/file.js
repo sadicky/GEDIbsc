@@ -26,9 +26,20 @@ $(document).ready(function () {
     }
   });
 
-	$(document).on("click","'#share'",function(){
-		uni_modal("<i class='fa fa-share'></i> Share this document using the link.","modal_share_link.php?did=<?php echo md5($id) ?>")
-	});
+  $(document).on("click",'.shared',function(){
+    var id = $(this).attr("id");
+    $.ajax({
+      url: "Public/Script/File/viewshare.php",
+      method: "post",
+      data: {
+        id: id,
+      },
+      success: function (data) {
+        $("#share_detail").html(data);
+        $("#shareModal").modal("show"); 
+    }});
+    
+  });
   //restorer la version
   $(document).on("click", ".restorev", function (event) {
     event.preventDefault();
@@ -51,4 +62,45 @@ $(document).ready(function () {
       });
     }
   });
+
+    //rename  
+    $(document).on("click",'.rename',function(){
+    var id = $(this).attr("id");
+    $.ajax({
+      url: "Public/Script/File/rename.php",
+      method: "post",
+      data: {
+        id: id,
+      },
+      success: function (data) {
+        $("#rename_detail").html(data);
+        $("#Rename").modal("show"); 
+    }});    
+  });
+
+
+  //rename
+  $(document).on("click", ".submitr", function (e) {
+    e.preventDefault();
+    $.ajax({
+      url: "Public/Script/File/renamefile.php",
+      method: "POST",
+      data: $("#formren").serialize(),
+      success: function (data) {
+        $("#Rename").modal("hide");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setInterval(refreshPage, 1000);
+      },
+    });
+    return false;
+  });
+
+
+
 });
